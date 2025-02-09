@@ -46,6 +46,8 @@ export default function MetadataUploader() {
                     onChange={handleFileChange}
                     className="file-input"
                 />
+                {selectedFile && <p className="file-label">Selected JPG file: {selectedFile.name}</p>}
+
                 <label className="file-label">Select Metadata File (TXT):</label>
                 <input
                     type="file"
@@ -53,6 +55,8 @@ export default function MetadataUploader() {
                     onChange={handleMetadataFileChange}
                     className="file-input"
                 />
+                {metadataFile && <p className="file-label">Selected metadata file: {metadataFile.name}</p>}
+
                 <button
                     onClick={handleUpload}
                     className="upload-button"
