@@ -1,5 +1,6 @@
 import React from "react";
 import FileUploader from "./components/FileUploader";
+import "./styles/App.css";
 
 function App() {
   return (
