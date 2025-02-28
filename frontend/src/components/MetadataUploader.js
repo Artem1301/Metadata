@@ -4,6 +4,8 @@ import "../styles/App.css";
 export default function MetadataUploader() {
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [metadataFile, setMetadataFile] = useState(null);
+    const [uploadMessage, setUploadMessage] = useState("");
+    const [downloadUrl, setDownloadUrl] = useState(null);
 
     const handleFileChange = (event) => {
         setSelectedFiles([...event.target.files]);
@@ -29,16 +31,17 @@ export default function MetadataUploader() {
                 body: formData
             });
 
-            const text = await response.text();
-            console.log(text);
-
             if (response.ok) {
-                alert("Files uploaded successfully!");
+                const blob = await response.blob();
+                const url = URL.createObjectURL(blob);
+                setDownloadUrl(url);
+                setUploadMessage("Files processed successfully! Click below to download.");
             } else {
-                alert("Upload error: " + text);
+                const text = await response.text();
+                setUploadMessage("Upload error: " + text);
             }
         } catch (error) {
-            alert("Connection error with the server.");
+            setUploadMessage("Connection error with the server.");
             console.error(error);
         }
     };
@@ -46,10 +49,36 @@ export default function MetadataUploader() {
     return (
         <div className="container">
             <h1>JPG Metadata Editor</h1>
-            <input type="file" accept="image/jpeg" multiple onChange={handleFileChange} />
-            <input type="file" accept=".txt" onChange={handleMetadataFileChange} />
+
+            {/* File input for JPG images */}
+            <input
+                type="file"
+                accept="image/jpeg"
+                multiple
+                onChange={handleFileChange}
+            />
+
+            {/* File input for metadata TXT file */}
+            <input
+                type="file"
+                accept=".txt"
+                onChange={handleMetadataFileChange}
+            />
+
+            {/* Upload button */}
             <button onClick={handleUpload}>Upload</button>
 
+            {/* Message displaying status of upload */}
+            {uploadMessage && <p>{uploadMessage}</p>}
+
+            {/* Download link for the ZIP file containing modified images */}
+            {downloadUrl && (
+                <a href={downloadUrl} download="modified_images.zip">
+                    Download Updated Images
+                </a>
+            )}
+
+            {/* Display selected files */}
             {selectedFiles.length > 0 && (
                 <div>
                     <h2>Selected files:</h2>
