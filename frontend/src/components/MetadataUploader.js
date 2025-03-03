@@ -1,11 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "../styles/App.css";
 
 export default function MetadataUploader() {
+    useEffect(() => {
+        document.title = "Курсова Демиденко";
+    }, []);
+
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [metadataFile, setMetadataFile] = useState(null);
     const [uploadMessage, setUploadMessage] = useState("");
     const [downloadUrl, setDownloadUrl] = useState(null);
+    const [metadata, setMetadata] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const handleFileChange = (event) => {
         setSelectedFiles([...event.target.files]);
@@ -17,10 +25,11 @@ export default function MetadataUploader() {
 
     const handleUpload = async () => {
         if (selectedFiles.length === 0 || !metadataFile) {
-            alert("Please select JPG files and a TXT file with metadata.");
+            toast.error("Выберите JPG и TXT файл!");
             return;
         }
 
+        setLoading(true);
         const formData = new FormData();
         selectedFiles.forEach(file => formData.append("files", file));
         formData.append("metadata", metadataFile);
@@ -35,14 +44,38 @@ export default function MetadataUploader() {
                 const blob = await response.blob();
                 const url = URL.createObjectURL(blob);
                 setDownloadUrl(url);
-                setUploadMessage("Files processed successfully! Click below to download.");
+                toast.success("Файлы обработаны! Можно скачать.");
             } else {
-                const text = await response.text();
-                setUploadMessage("Upload error: " + text);
+                toast.error("Ошибка загрузки.");
             }
         } catch (error) {
-            setUploadMessage("Connection error with the server.");
-            console.error(error);
+            toast.error("Ошибка соединения с сервером.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleViewMetadata = async (file) => {
+        setLoading(true);
+        const formData = new FormData();
+        formData.append("file", file);
+
+        try {
+            const response = await fetch("http://localhost:8080/api/readMetadata", {
+                method: "POST",
+                body: formData
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                setMetadata(data);
+            } else {
+                toast.error("Ошибка при чтении метаданных.");
+            }
+        } catch (error) {
+            toast.error("Ошибка соединения.");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -50,45 +83,35 @@ export default function MetadataUploader() {
         <div className="container">
             <h1>JPG Metadata Editor</h1>
 
-            {/* File input for JPG images */}
-            <input
-                type="file"
-                accept="image/jpeg"
-                multiple
-                onChange={handleFileChange}
-            />
+            <input type="file" accept="image/jpeg" multiple onChange={handleFileChange} />
+            <input type="file" accept=".txt" onChange={handleMetadataFileChange} />
+            <button onClick={handleUpload} disabled={loading}>Загрузить</button>
 
-            {/* File input for metadata TXT file */}
-            <input
-                type="file"
-                accept=".txt"
-                onChange={handleMetadataFileChange}
-            />
-
-            {/* Upload button */}
-            <button onClick={handleUpload}>Upload</button>
-
-            {/* Message displaying status of upload */}
+            {loading && <p>Загрузка...</p>}
             {uploadMessage && <p>{uploadMessage}</p>}
+            {downloadUrl && <a href={downloadUrl} download="modified_images.zip">Скачать файлы</a>}
 
-            {/* Download link for the ZIP file containing modified images */}
-            {downloadUrl && (
-                <a href={downloadUrl} download="modified_images.zip">
-                    Download Updated Images
-                </a>
-            )}
-
-            {/* Display selected files */}
             {selectedFiles.length > 0 && (
                 <div>
-                    <h2>Selected files:</h2>
+                    <h2>Выбранные файлы:</h2>
                     <ul>
                         {selectedFiles.map((file, index) => (
-                            <li key={index}>{file.name}</li>
+                            <li key={index}>
+                                {file.name} <button onClick={() => handleViewMetadata(file)}>Показать метаданные</button>
+                            </li>
                         ))}
                     </ul>
                 </div>
             )}
+
+            {metadata && (
+                <div>
+                    <h2>Метаданные</h2>
+                    <pre>{JSON.stringify(metadata, null, 2)}</pre>
+                </div>
+            )}
+
+            <ToastContainer />
         </div>
     );
 }
