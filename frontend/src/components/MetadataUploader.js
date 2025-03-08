@@ -10,11 +10,9 @@ export default function MetadataUploader() {
 
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [metadataFile, setMetadataFile] = useState(null);
-    const [loading, setLoading] = useState(false);
     const [downloadUrl, setDownloadUrl] = useState(null);
     const [metadata, setMetadata] = useState(null);
-    const [uploading, setUploading] = useState(false);  // добавлено отдельное состояние для загрузки
-    const [viewingMetadata, setViewingMetadata] = useState(false);  // добавлено состояние для чтения метаданных
+    const [loadingMetadataFor, setLoadingMetadataFor] = useState(null); // Для индикации загрузки метаданных
 
     const handleFileChange = (event) => {
         setSelectedFiles([...event.target.files]);
@@ -30,7 +28,6 @@ export default function MetadataUploader() {
             return;
         }
 
-        setUploading(true); // Начинаем загрузку
         const formData = new FormData();
         selectedFiles.forEach(file => formData.append("files", file));
         formData.append("metadata", metadataFile);
@@ -51,13 +48,11 @@ export default function MetadataUploader() {
             }
         } catch (error) {
             toast.error("Ошибка соединения с сервером.");
-        } finally {
-            setUploading(false);  // Завершаем загрузку
         }
     };
 
     const handleViewMetadata = async (file) => {
-        setViewingMetadata(true); // Начинаем чтение метаданных
+        setLoadingMetadataFor(file.name);
         const formData = new FormData();
         formData.append("file", file);
 
@@ -69,15 +64,51 @@ export default function MetadataUploader() {
 
             if (response.ok) {
                 const data = await response.json();
-                setMetadata(data);
+                setMetadata({ fileName: file.name, data });
             } else {
                 toast.error("Ошибка при чтении метаданных.");
             }
         } catch (error) {
             toast.error("Ошибка соединения.");
         } finally {
-            setViewingMetadata(false); // Завершаем чтение метаданных
+            setLoadingMetadataFor(null);
         }
+    };
+
+    const renderMetadata = (metadata) => {
+        return (
+            <div className="metadata-box">
+                {Object.keys(metadata).map((key, index) => {
+                    if (metadata[key] === null) {
+                        return (
+                            <div key={index}>
+                                <strong>{key}:</strong> null
+                            </div>
+                        );
+                    }
+                    if (typeof metadata[key] === "object" && metadata[key] !== null) {
+                        return (
+                            <div key={index} className="metadata-group">
+                                <strong>{key}:</strong>
+                                <div className="nested-metadata">
+                                    {Object.keys(metadata[key]).map((nestedKey, nestedIndex) => (
+                                        <div key={nestedIndex}>
+                                            <strong>{nestedKey}:</strong> {metadata[key][nestedKey] || "null"}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        );
+                    } else {
+                        return (
+                            <div key={index}>
+                                <strong>{key}:</strong> {metadata[key] || "null"}
+                            </div>
+                        );
+                    }
+                })}
+            </div>
+        );
     };
 
     return (
@@ -86,10 +117,18 @@ export default function MetadataUploader() {
 
             <input type="file" accept="image/jpeg" multiple onChange={handleFileChange} />
             <input type="file" accept=".txt" onChange={handleMetadataFileChange} />
-            <button onClick={handleUpload} disabled={uploading}>Загрузить</button>
 
-            {uploading && <p>Загрузка...</p>} {/* Индикатор загрузки */}
-            {downloadUrl && <a href={downloadUrl} download="modified_images.zip">Скачать файлы</a>}
+            <button onClick={handleUpload} className="upload-button">
+                Загрузить
+            </button>
+
+            {downloadUrl && (
+                <div className="download-container">
+                    <a href={downloadUrl} download="modified_images.zip" className="download-link">
+                        Скачать файлы
+                    </a>
+                </div>
+            )}
 
             {selectedFiles.length > 0 && (
                 <div>
@@ -98,8 +137,12 @@ export default function MetadataUploader() {
                         {selectedFiles.map((file, index) => (
                             <li key={index}>
                                 {file.name}
-                                <button onClick={() => handleViewMetadata(file)} disabled={viewingMetadata}>
-                                    Показать метаданные
+                                <button
+                                    onClick={() => handleViewMetadata(file)}
+                                    disabled={loadingMetadataFor === file.name}
+                                    className="metadata-button"
+                                >
+                                    {loadingMetadataFor === file.name ? "Загрузка..." : "Показать метаданные"}
                                 </button>
                             </li>
                         ))}
@@ -108,9 +151,9 @@ export default function MetadataUploader() {
             )}
 
             {metadata && (
-                <div>
-                    <h2>Метаданные</h2>
-                    <pre>{JSON.stringify(metadata, null, 2)}</pre>
+                <div className="metadata-container">
+                    <h2>Метаданные:</h2>
+                    {renderMetadata(metadata.data)}
                 </div>
             )}
 

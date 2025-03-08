@@ -28,15 +28,30 @@ button {
   background: #007bff;
   color: white;
   border: none;
-  padding: 10px 15px;
+  padding: 8px 12px;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 14px;
   transition: 0.3s;
+  margin-top: 5px;
 }
 
 button:hover {
   background: #0056b3;
+}
+
+/* Кнопка загрузки - растянута на всю ширину */
+.upload-button {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* Кнопка "Показать метаданные" теперь идет под каждым файлом */
+.metadata-button {
+  display: block;
+  width: 100%;
+  margin-top: 5px;
 }
 
 input[type="file"] {
@@ -52,8 +67,48 @@ ul {
 
 li {
   background: #e9ecef;
-  padding: 5px;
+  padding: 8px;
   margin: 5px 0;
   border-radius: 5px;
   font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.download-container {
+  margin-top: 15px;
+}
+
+.download-link {
+  display: inline-block;
+  font-size: 16px;
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.download-link:hover {
+  text-decoration: underline;
+}
+
+.metadata-container {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 8px;
+  background: #f5f5f5;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.metadata-box {
+  background: white;
+  padding: 15px;
+  border-radius: 5px;
+  border-left: 5px solid #007bff;
+  overflow-x: auto;
+  font-family: monospace;
+  max-height: 300px;
+  overflow-y: auto;
 }
