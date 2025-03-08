@@ -10,10 +10,11 @@ export default function MetadataUploader() {
 
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [metadataFile, setMetadataFile] = useState(null);
-    const [uploadMessage, setUploadMessage] = useState("");
+    const [loading, setLoading] = useState(false);
     const [downloadUrl, setDownloadUrl] = useState(null);
     const [metadata, setMetadata] = useState(null);
-    const [loading, setLoading] = useState(false);
+    const [uploading, setUploading] = useState(false);  // добавлено отдельное состояние для загрузки
+    const [viewingMetadata, setViewingMetadata] = useState(false);  // добавлено состояние для чтения метаданных
 
     const handleFileChange = (event) => {
         setSelectedFiles([...event.target.files]);
@@ -29,7 +30,7 @@ export default function MetadataUploader() {
             return;
         }
 
-        setLoading(true);
+        setUploading(true); // Начинаем загрузку
         const formData = new FormData();
         selectedFiles.forEach(file => formData.append("files", file));
         formData.append("metadata", metadataFile);
@@ -51,12 +52,12 @@ export default function MetadataUploader() {
         } catch (error) {
             toast.error("Ошибка соединения с сервером.");
         } finally {
-            setLoading(false);
+            setUploading(false);  // Завершаем загрузку
         }
     };
 
     const handleViewMetadata = async (file) => {
-        setLoading(true);
+        setViewingMetadata(true); // Начинаем чтение метаданных
         const formData = new FormData();
         formData.append("file", file);
 
@@ -75,7 +76,7 @@ export default function MetadataUploader() {
         } catch (error) {
             toast.error("Ошибка соединения.");
         } finally {
-            setLoading(false);
+            setViewingMetadata(false); // Завершаем чтение метаданных
         }
     };
 
@@ -85,10 +86,9 @@ export default function MetadataUploader() {
 
             <input type="file" accept="image/jpeg" multiple onChange={handleFileChange} />
             <input type="file" accept=".txt" onChange={handleMetadataFileChange} />
-            <button onClick={handleUpload} disabled={loading}>Загрузить</button>
+            <button onClick={handleUpload} disabled={uploading}>Загрузить</button>
 
-            {loading && <p>Загрузка...</p>}
-            {uploadMessage && <p>{uploadMessage}</p>}
+            {uploading && <p>Загрузка...</p>} {/* Индикатор загрузки */}
             {downloadUrl && <a href={downloadUrl} download="modified_images.zip">Скачать файлы</a>}
 
             {selectedFiles.length > 0 && (
@@ -97,7 +97,10 @@ export default function MetadataUploader() {
                     <ul>
                         {selectedFiles.map((file, index) => (
                             <li key={index}>
-                                {file.name} <button onClick={() => handleViewMetadata(file)}>Показать метаданные</button>
+                                {file.name}
+                                <button onClick={() => handleViewMetadata(file)} disabled={viewingMetadata}>
+                                    Показать метаданные
+                                </button>
                             </li>
                         ))}
                     </ul>
