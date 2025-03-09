@@ -74,7 +74,7 @@ public class MetadataController {
             // Читаем EXIF
             ExifSubIFDDirectory exifDir = metadata.getFirstDirectoryOfType(ExifSubIFDDirectory.class);
             if (exifDir != null) {
-                extractedData.put("Дата съемки", exifDir.getString(ExifSubIFDDirectory.TAG_DATETIME_ORIGINAL));
+                extractedData.put("Дата съемки", exifDir.getString(ExifSubIFDDirectory.TAG_DATETIME));
                 extractedData.put("Камера", exifDir.getString(ExifSubIFDDirectory.TAG_MAKE));
                 extractedData.put("Модель камеры", exifDir.getString(ExifSubIFDDirectory.TAG_MODEL));
             }
