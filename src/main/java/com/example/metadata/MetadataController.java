@@ -76,6 +76,7 @@ public class MetadataController {
             if (exifDir != null) {
                 extractedData.put("Дата съемки", exifDir.getString(ExifSubIFDDirectory.TAG_DATETIME_ORIGINAL));
                 extractedData.put("Камера", exifDir.getString(ExifSubIFDDirectory.TAG_MAKE));
+                extractedData.put("Модель камеры", exifDir.getString(ExifSubIFDDirectory.TAG_MODEL));
             }
 
             // Читаем IPTC
@@ -135,6 +136,14 @@ public class MetadataController {
         if (metadata.containsKey("camera")) {
             exifDirectory.add(TiffTagConstants.TIFF_TAG_MAKE, metadata.get("camera"));
             System.out.println("EXIF: Обновлена камера (camera).");
+        }
+        if (metadata.containsKey("model")) {
+            exifDirectory.add(TiffTagConstants.TIFF_TAG_MODEL, metadata.get("model"));
+            System.out.println("EXIF: Обновлена модель камеры (model).");
+        }
+        if (metadata.containsKey("datetime")) {
+            exifDirectory.add(TiffTagConstants.TIFF_TAG_DATE_TIME, metadata.get("datetime"));
+            System.out.println("EXIF: Обновлена дата съемки (datetime).");
         }
 
         // Обновляем EXIF
