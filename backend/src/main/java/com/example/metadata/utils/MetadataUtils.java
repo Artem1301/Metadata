@@ -1,4 +1,4 @@
-package com.example.metadata;
+package com.example.metadata.utils;
 
 import com.drew.imaging.ImageMetadataReader;
 import com.drew.imaging.ImageProcessingException;
@@ -12,95 +12,13 @@ import org.apache.commons.imaging.formats.jpeg.exif.ExifRewriter;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
 import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.util.*;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 
-@RestController
-@RequestMapping("/api")
-public class MetadataController {
-
-    // 📌 API для загрузки JPG и обновления метаданных
-    @PostMapping("/upload")
-    public ResponseEntity<byte[]> uploadFiles(
-            @RequestParam("files") MultipartFile[] jpgFiles,
-            @RequestParam("metadata") MultipartFile metadataFile) {
-
-        try {
-            // Читаем метаданные из текстового файла
-            Map<String, String> metadata = readMetadataFromTxt(metadataFile);
-            System.out.println("Метаданные успешно прочитаны: " + metadata);
-
-            ByteArrayOutputStream zipOutputStream = new ByteArrayOutputStream();
-            try (ZipOutputStream zipStream = new ZipOutputStream(zipOutputStream)) {
-                for (MultipartFile jpgFile : jpgFiles) {
-                    System.out.println("Обрабатываем файл: " + jpgFile.getOriginalFilename());
-                    byte[] modifiedImage = writeMetadata(jpgFile.getBytes(), metadata);
-
-                    // Добавляем модифицированное изображение в архив
-                    ZipEntry zipEntry = new ZipEntry("modified_" + jpgFile.getOriginalFilename());
-                    zipStream.putNextEntry(zipEntry);
-                    zipStream.write(modifiedImage);
-                    zipStream.closeEntry();
-                }
-            }
-
-            // Отправляем архив с изображениями как ответ
-            return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=modified_images.zip")
-                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                    .body(zipOutputStream.toByteArray());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().body(("Error: " + e.getMessage()).getBytes());
-        }
-    }
-
-    // 📌 API для чтения метаданных JPG
-    @PostMapping("/readMetadata")
-    public ResponseEntity<Map<String, Object>> readMetadata(@RequestParam("file") MultipartFile jpgFile) {
-        try {
-            Metadata metadata = ImageMetadataReader.readMetadata(jpgFile.getInputStream());
-            Map<String, Object> extractedData = new HashMap<>();
-
-            // Читаем EXIF
-            ExifSubIFDDirectory exifDir = metadata.getFirstDirectoryOfType(ExifSubIFDDirectory.class);
-            if (exifDir != null) {
-                extractedData.put("Дата съемки", exifDir.getString(ExifSubIFDDirectory.TAG_DATETIME));
-                extractedData.put("Камера", exifDir.getString(ExifSubIFDDirectory.TAG_MAKE));
-                extractedData.put("Модель камеры", exifDir.getString(ExifSubIFDDirectory.TAG_MODEL));
-            }
-
-            // Читаем IPTC
-            IptcDirectory iptcDir = metadata.getFirstDirectoryOfType(IptcDirectory.class);
-            if (iptcDir != null) {
-                extractedData.put("Автор", iptcDir.getString(IptcDirectory.TAG_BY_LINE));
-                extractedData.put("Ключевые слова", iptcDir.getString(IptcDirectory.TAG_KEYWORDS));
-            }
-
-            // Читаем XMP
-            XmpDirectory xmpDir = metadata.getFirstDirectoryOfType(XmpDirectory.class);
-            if (xmpDir != null) {
-                extractedData.put("XMP", xmpDir.getXmpProperties());
-            }
-
-            return ResponseEntity.ok(extractedData);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().body(Collections.singletonMap("error", e.getMessage()));
-        }
-    }
-
-    // 🔹 Читаем метаданные из текстового файла (title=Title, author=Author, keywords=Keyword1,Keyword2)
-    private Map<String, String> readMetadataFromTxt(MultipartFile txtFile) throws IOException {
+public class MetadataUtils {
+    public Map<String, String> readMetadataFromTxt(MultipartFile txtFile) throws IOException {
         Map<String, String> metadata = new HashMap<>();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(txtFile.getInputStream()))) {
             String line;
@@ -114,8 +32,7 @@ public class MetadataController {
         return metadata;
     }
 
-    // 🔹 Записываем метаданные в JPG (EXIF, IPTC, XMP)
-    private byte[] writeMetadata(byte[] imageBytes, Map<String, String> metadata)
+    public byte[] writeMetadata(byte[] imageBytes, Map<String, String> metadata)
             throws IOException, ImageReadException, ImageWriteException {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

@@ -1,4 +1,4 @@
-package com.example.metadata;
+package com.example.metadata.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

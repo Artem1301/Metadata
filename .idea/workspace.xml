@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8a25a6ae-bf7b-4b17-ad20-3a136ddb9541" name="Changes" comment="Adding features">
+      <change afterPath="$PROJECT_DIR$/backend/.venv/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/python/metadata_server.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/python/update_metadata.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitattributes" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.gitattributes" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mvnw" beforeDir="false" afterPath="$PROJECT_DIR$/backend/mvnw" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mvnw.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/backend/mvnw.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/metadata/CorsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/example/metadata/CorsConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/metadata/FileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/example/metadata/FileService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/metadata/JpgMetadataApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/example/metadata/JpgMetadataApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/metadata/MetadataController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/example/metadata/MetadataController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/metadata/MetadataApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/com/example/metadata/MetadataApplicationTests.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+        <option value="Python Script" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/frontend" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="MIXED" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2sLaXc33MyOX6j1GjdAmJlr3P5d" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="openDirectoriesWithSingleClick" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Learning/lab prog/Metadata&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.48390806&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Learning\lab prog\Metadata" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Learning\lab prog\Metadata" />
+      <recent name="D:\Learning\lab prog\Metadata\backend" />
+      <recent name="D:\Learning\lab prog\Metadata\src\main\python" />
+      <recent name="D:\Learning\lab prog\Metadata\frontend\src\styles" />
+      <recent name="D:\Learning\lab prog\Metadata\frontend\src\components" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="JpgMetadataApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="Metadata" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.metadata.JpgMetadataApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-PY-243.21565.199" />
+        <option value="bundled-python-sdk-cab1f2013843-4ae2d6a61b08-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.21565.199" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8a25a6ae-bf7b-4b17-ad20-3a136ddb9541" name="Changes" comment="" />
+      <created>1738237350368</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1738237350368</updated>
+      <workItem from="1738237351381" duration="1263000" />
+      <workItem from="1738243267938" duration="745000" />
+      <workItem from="1738244031805" duration="132000" />
+      <workItem from="1738244175755" duration="40000" />
+      <workItem from="1738244228171" duration="221000" />
+      <workItem from="1738244550917" duration="756000" />
+      <workItem from="1738245565348" duration="148000" />
+      <workItem from="1738320423274" duration="641000" />
+      <workItem from="1739103282396" duration="716000" />
+      <workItem from="1739107827395" duration="327000" />
+      <workItem from="1739108168142" duration="454000" />
+      <workItem from="1739188360119" duration="1821000" />
+      <workItem from="1739190209480" duration="298000" />
+      <workItem from="1739876890932" duration="1885000" />
+      <workItem from="1739972219625" duration="777000" />
+      <workItem from="1739973014045" duration="633000" />
+      <workItem from="1740133434950" duration="627000" />
+      <workItem from="1740142002641" duration="316000" />
+      <workItem from="1740310561385" duration="595000" />
+      <workItem from="1740312633832" duration="744000" />
+      <workItem from="1740406182270" duration="281000" />
+      <workItem from="1740497267463" duration="1887000" />
+      <workItem from="1740682850037" duration="1634000" />
+      <workItem from="1740755435072" duration="2160000" />
+      <workItem from="1741009311862" duration="2841000" />
+      <workItem from="1741089411814" duration="105000" />
+      <workItem from="1741090367399" duration="2613000" />
+      <workItem from="1741094269880" duration="584000" />
+      <workItem from="1741252289322" duration="1529000" />
+      <workItem from="1741259549641" duration="1526000" />
+      <workItem from="1741261697841" duration="188000" />
+      <workItem from="1741353456613" duration="3233000" />
+      <workItem from="1741364379698" duration="1107000" />
+      <workItem from="1741372456211" duration="337000" />
+      <workItem from="1741424677132" duration="3543000" />
+      <workItem from="1741428481556" duration="27000" />
+      <workItem from="1741432117843" duration="383000" />
+      <workItem from="1741432517875" duration="84000" />
+      <workItem from="1741432614794" duration="2412000" />
+      <workItem from="1741438941203" duration="1068000" />
+      <workItem from="1741455741161" duration="1049000" />
+      <workItem from="1741521478980" duration="1900000" />
+      <workItem from="1741527226262" duration="249000" />
+      <workItem from="1741528022113" duration="244000" />
+      <workItem from="1741528627791" duration="1371000" />
+      <workItem from="1741530758557" duration="272000" />
+      <workItem from="1741546805625" duration="3656000" />
+    </task>
+    <task id="LOCAL-00001" summary="First commit">
+      <option name="closed" value="true" />
+      <created>1738244650569</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1738244650569</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Updating (frontend)">
+      <option name="closed" value="true" />
+      <created>1738245677741</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1738245677741</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Updating (frontend)">
+      <option name="closed" value="true" />
+      <created>1739108100585</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1739108100585</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Updating (frontend). I have added uploader">
+      <option name="closed" value="true" />
+      <created>1739108431302</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1739108431302</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Updating (frontend). I have added features">
+      <option name="closed" value="true" />
+      <created>1739108596475</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1739108596475</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Solving problems">
+      <option name="closed" value="true" />
+      <created>1739190493311</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1739190493311</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Solving problems">
+      <option name="closed" value="true" />
+      <created>1740757571363</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1740757571364</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Adding features">
+      <option name="closed" value="true" />
+      <created>1741010550637</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1741010550637</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Adding features">
+      <option name="closed" value="true" />
+      <created>1741439385654</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1741439385654</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Adding features">
+      <option name="closed" value="true" />
+      <created>1741456786780</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1741456786780</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Adding features">
+      <option name="closed" value="true" />
+      <created>1741530719134</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1741530719134</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Adding features">
+      <option name="closed" value="true" />
+      <created>1741531023890</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1741531023890</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="First commit" />
+    <MESSAGE value="Updating (frontend)" />
+    <MESSAGE value="Updating (frontend). I have added uploader" />
+    <MESSAGE value="Updating (frontend). I have added features" />
+    <MESSAGE value="Solving problems" />
+    <MESSAGE value="Adding features" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding features" />
+  </component>
+</project>

@@ -1,0 +1,5 @@
+XMP-dc:Title=Повний місяць 2025
+XMP-dc:Creator=John Doe
+XMP-dc:Rights=© 2025 John Doe
+XMP-dc:Subject=астрономія, місяць, нічне небо
+XMP-xmp:ModifyDate=2025:03:08T12:34:56
