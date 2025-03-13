@@ -67,22 +67,12 @@ public class MetadataService extends MetadataUtils{
             Metadata metadata = ImageMetadataReader.readMetadata(jpgFile.getInputStream());
             Map<String, Object> extractedData = new HashMap<>();
 
-            // Читаем EXIF
-            ExifSubIFDDirectory exifDir = metadata.getFirstDirectoryOfType(ExifSubIFDDirectory.class);
-            if (exifDir != null) {
-                extractedData.put("Дата съемки", exifDir.getString(ExifSubIFDDirectory.TAG_DATETIME));
-                extractedData.put("Камера", exifDir.getString(ExifSubIFDDirectory.TAG_MAKE));
-                extractedData.put("Модель камеры", exifDir.getString(ExifSubIFDDirectory.TAG_MODEL));
+            // Читаємо всі EXIF метадані
+            for (ExifSubIFDDirectory exifDir : metadata.getDirectoriesOfType(ExifSubIFDDirectory.class)) {
+                exifDir.getTags().forEach(tag -> extractedData.put(tag.getTagName(), tag.getDescription()));
             }
 
-            // Читаем IPTC
-            IptcDirectory iptcDir = metadata.getFirstDirectoryOfType(IptcDirectory.class);
-            if (iptcDir != null) {
-                extractedData.put("Автор", iptcDir.getString(IptcDirectory.TAG_BY_LINE));
-                extractedData.put("Ключевые слова", iptcDir.getString(IptcDirectory.TAG_KEYWORDS));
-            }
-
-            // Читаем XMP
+            // Читаємо XMP
             XmpDirectory xmpDir = metadata.getFirstDirectoryOfType(XmpDirectory.class);
             if (xmpDir != null) {
                 extractedData.put("XMP", xmpDir.getXmpProperties());
