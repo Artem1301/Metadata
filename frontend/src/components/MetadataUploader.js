@@ -12,7 +12,7 @@ export default function MetadataUploader() {
     const [metadataFile, setMetadataFile] = useState(null);
     const [downloadUrl, setDownloadUrl] = useState(null);
     const [metadata, setMetadata] = useState(null);
-    const [loadingMetadataFor, setLoadingMetadataFor] = useState(null); // Для индикации загрузки метаданных
+    const [loadingMetadataFor, setLoadingMetadataFor] = useState(null);
 
     const handleFileChange = (event) => {
         setSelectedFiles([...event.target.files]);
@@ -24,7 +24,7 @@ export default function MetadataUploader() {
 
     const handleUpload = async () => {
         if (selectedFiles.length === 0 || !metadataFile) {
-            toast.error("Выберите JPG и TXT файл!");
+            toast.error("Виберіть JPG і TXT файл!");
             return;
         }
 
@@ -42,12 +42,12 @@ export default function MetadataUploader() {
                 const blob = await response.blob();
                 const url = URL.createObjectURL(blob);
                 setDownloadUrl(url);
-                toast.success("Файлы обработаны! Можно скачать.");
+                toast.success("Файли оброблені! Можна завантажити.");
             } else {
-                toast.error("Ошибка загрузки.");
+                toast.error("Помилка завантаження.");
             }
         } catch (error) {
-            toast.error("Ошибка соединения с сервером.");
+            toast.error("Помилка з'єднання з сервером.");
         }
     };
 
@@ -66,73 +66,37 @@ export default function MetadataUploader() {
                 const data = await response.json();
                 setMetadata({ fileName: file.name, data });
             } else {
-                toast.error("Ошибка при чтении метаданных.");
+                toast.error("Помилка при читанні метаданих.");
             }
         } catch (error) {
-            toast.error("Ошибка соединения.");
+            toast.error("Помилка з'єднання.");
         } finally {
             setLoadingMetadataFor(null);
         }
     };
 
-    const renderMetadata = (metadata) => {
-        return (
-            <div className="metadata-box">
-                {Object.keys(metadata).map((key, index) => {
-                    if (metadata[key] === null) {
-                        return (
-                            <div key={index}>
-                                <strong>{key}:</strong> null
-                            </div>
-                        );
-                    }
-                    if (typeof metadata[key] === "object" && metadata[key] !== null) {
-                        return (
-                            <div key={index} className="metadata-group">
-                                <strong>{key}:</strong>
-                                <div className="nested-metadata">
-                                    {Object.keys(metadata[key]).map((nestedKey, nestedIndex) => (
-                                        <div key={nestedIndex}>
-                                            <strong>{nestedKey}:</strong> {metadata[key][nestedKey] || "null"}
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        );
-                    } else {
-                        return (
-                            <div key={index}>
-                                <strong>{key}:</strong> {metadata[key] || "null"}
-                            </div>
-                        );
-                    }
-                })}
-            </div>
-        );
-    };
-
     return (
         <div className="container">
-            <h1>JPG Metadata Editor</h1>
+            <h1>Редактор EXIF метаданих в JPG</h1>
 
             <input type="file" accept="image/jpeg" multiple onChange={handleFileChange} />
             <input type="file" accept=".txt" onChange={handleMetadataFileChange} />
 
             <button onClick={handleUpload} className="upload-button">
-                Загрузить
+                Завантажити
             </button>
 
             {downloadUrl && (
                 <div className="download-container">
                     <a href={downloadUrl} download="modified_images.zip" className="download-link">
-                        Скачать файлы
+                        Завантажити файли
                     </a>
                 </div>
             )}
 
             {selectedFiles.length > 0 && (
                 <div>
-                    <h2>Выбранные файлы:</h2>
+                    <h2>Обрані файли:</h2>
                     <ul>
                         {selectedFiles.map((file, index) => (
                             <li key={index}>
@@ -142,7 +106,7 @@ export default function MetadataUploader() {
                                     disabled={loadingMetadataFor === file.name}
                                     className="metadata-button"
                                 >
-                                    {loadingMetadataFor === file.name ? "Загрузка..." : "Показать метаданные"}
+                                    {loadingMetadataFor === file.name ? "Завантаження..." : "Показати метадані"}
                                 </button>
                             </li>
                         ))}
@@ -152,8 +116,12 @@ export default function MetadataUploader() {
 
             {metadata && (
                 <div className="metadata-container">
-                    <h2>Метаданные:</h2>
-                    {renderMetadata(metadata.data)}
+                    <h2>Метадані ({metadata.fileName}):</h2>
+                    <div className="metadata-box">
+                        {Object.entries(metadata.data).map(([key, value]) => (
+                            <div key={key}><strong>{key}:</strong> {value}</div>
+                        ))}
+                    </div>
                 </div>
             )}
 

@@ -1,12 +1,13 @@
 package com.example.metadata.controller;
 
 import com.example.metadata.service.MetadataService;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+import com.example.metadata.model.ProcessedFile;
+import com.example.metadata.service.MetadataService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.*;
 import java.util.Map;
 
 @RestController
@@ -29,5 +30,10 @@ public class MetadataController {
     @PostMapping("/readMetadata")
     public ResponseEntity<Map<String, Object>> readMetadata(@RequestParam("file") MultipartFile jpgFile) {
         return metadataService.readMetadata(jpgFile);
+    }
+
+    @GetMapping("/files")
+    public ResponseEntity<List<ProcessedFile>> getProcessedFiles() {
+        return ResponseEntity.ok(metadataService.getProcessedFiles());
     }
 }

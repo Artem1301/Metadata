@@ -18,6 +18,7 @@ import java.io.*;
 import java.util.*;
 
 public class MetadataUtils {
+
     public Map<String, String> readMetadataFromTxt(MultipartFile txtFile) throws IOException {
         Map<String, String> metadata = new HashMap<>();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(txtFile.getInputStream()))) {

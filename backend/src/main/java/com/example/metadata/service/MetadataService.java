@@ -1,5 +1,8 @@
 package com.example.metadata.service;
 
+import com.example.metadata.model.ProcessedFile;
+import com.example.metadata.repository.ProcessedFileRepository;
+import com.example.metadata.utils.MetadataUtils;
 import com.drew.imaging.ImageMetadataReader;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.exif.ExifSubIFDDirectory;
@@ -17,29 +20,35 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.ByteArrayOutputStream;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 @Service
-public class MetadataService extends MetadataUtils{
+public class MetadataService extends MetadataUtils {
+    private final ProcessedFileRepository processedFileRepository;
 
-    public ResponseEntity<byte[]> uploadFiles(
-            @RequestParam("files") MultipartFile[] jpgFiles,
-            @RequestParam("metadata") MultipartFile metadataFile) {
+    public MetadataService(ProcessedFileRepository processedFileRepository) {
+        this.processedFileRepository = processedFileRepository;
+    }
 
+    public ResponseEntity<byte[]> uploadFiles(MultipartFile[] jpgFiles, MultipartFile metadataFile) {
         try {
-            // Читаем метаданные из текстового файла
             Map<String, String> metadata = readMetadataFromTxt(metadataFile);
-            System.out.println("Метаданные успешно прочитаны: " + metadata);
-
             ByteArrayOutputStream zipOutputStream = new ByteArrayOutputStream();
+
             try (ZipOutputStream zipStream = new ZipOutputStream(zipOutputStream)) {
                 for (MultipartFile jpgFile : jpgFiles) {
-                    System.out.println("Обрабатываем файл: " + jpgFile.getOriginalFilename());
                     byte[] modifiedImage = writeMetadata(jpgFile.getBytes(), metadata);
 
-                    // Добавляем модифицированное изображение в архив
+                    // Збереження у базу даних
+                    ProcessedFile processedFile = new ProcessedFile();
+                    processedFile.setFileName("modified_" + jpgFile.getOriginalFilename());
+                    processedFile.setFileData(modifiedImage);
+                    processedFile.setMetadata(metadata.toString());
+                    processedFileRepository.save(processedFile);
+
+                    // Додавання файлу у архів
                     ZipEntry zipEntry = new ZipEntry("modified_" + jpgFile.getOriginalFilename());
                     zipStream.putNextEntry(zipEntry);
                     zipStream.write(modifiedImage);
@@ -47,7 +56,6 @@ public class MetadataService extends MetadataUtils{
                 }
             }
 
-            // Отправляем архив с изображениями как ответ
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=modified_images.zip")
                     .contentType(MediaType.APPLICATION_OCTET_STREAM)
@@ -59,6 +67,9 @@ public class MetadataService extends MetadataUtils{
         }
     }
 
+    public List<ProcessedFile> getProcessedFiles() {
+        return processedFileRepository.findAll();
+    }
 
     // 📌 API для чтения метаданных JPG
     @PostMapping("/readMetadata")
