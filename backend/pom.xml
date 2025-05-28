@@ -43,7 +43,6 @@
         <scope>runtime</scope>
         <optional>true</optional>
     </dependency>
-
     <!-- Lombok -->
     <dependency>
         <groupId>org.projectlombok</groupId>
@@ -62,8 +61,13 @@
             <scope>runtime</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
 
-    <!-- Metadata Extractor for reading metadata -->
+        <!-- Metadata Extractor for reading metadata -->
     <dependency>
         <groupId>com.drewnoakes</groupId>
         <artifactId>metadata-extractor</artifactId>

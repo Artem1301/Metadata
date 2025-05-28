@@ -1,5 +1,9 @@
 package com.example.metadata.utils;
 
+import com.adobe.internal.xmp.XMPException;
+import com.adobe.internal.xmp.XMPMeta;
+import com.adobe.internal.xmp.XMPMetaFactory;
+import com.adobe.internal.xmp.options.SerializeOptions;
 import com.drew.imaging.ImageMetadataReader;
 import com.drew.imaging.ImageProcessingException;
 import com.drew.metadata.*;
@@ -19,6 +23,11 @@ import java.util.*;
 
 public class MetadataUtils {
 
+    private boolean isValidImage(MultipartFile file) {
+        String contentType = file.getContentType();
+        return contentType != null && (contentType.equals("image/jpeg") || contentType.equals("image/png"));
+    }
+
     public Map<String, String> readMetadataFromTxt(MultipartFile txtFile) throws IOException {
         Map<String, String> metadata = new HashMap<>();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(txtFile.getInputStream()))) {
@@ -34,7 +43,7 @@ public class MetadataUtils {
     }
 
     public byte[] writeMetadata(byte[] imageBytes, Map<String, String> metadata)
-            throws IOException, ImageReadException, ImageWriteException, ImageProcessingException {
+            throws IOException, ImageReadException, ImageWriteException, ImageProcessingException, XMPException {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
@@ -57,6 +66,18 @@ public class MetadataUtils {
         if (metadata.containsKey("datetime")) {
             exifDirectory.add(TiffTagConstants.TIFF_TAG_DATE_TIME, metadata.get("datetime"));
         }
+        if (metadata.containsKey("copyright")) {
+            exifDirectory.add(TiffTagConstants.TIFF_TAG_COPYRIGHT, metadata.get("copyright"));
+        }
+        if (metadata.containsKey("software")) {
+            exifDirectory.add(TiffTagConstants.TIFF_TAG_SOFTWARE, metadata.get("software"));
+        }
+        if (metadata.containsKey("HostComputer")) {
+            exifDirectory.add(TiffTagConstants.TIFF_TAG_HOST_COMPUTER, metadata.get("HostComputer"));
+        }
+        if (metadata.containsKey("xmp")) {
+            exifDirectory.add(TiffTagConstants.TIFF_TAG_XMP, Byte.parseByte(metadata.get("xmp")));
+        }
 
         // Обновляем EXIF
         try (InputStream inputStream = new ByteArrayInputStream(imageBytes)) {
@@ -74,7 +95,8 @@ public class MetadataUtils {
 
         ByteArrayOutputStream finalOutputStream = new ByteArrayOutputStream();
         finalOutputStream.write(outputStream.toByteArray());
-
+        
         return finalOutputStream.toByteArray();
     }
 }
+

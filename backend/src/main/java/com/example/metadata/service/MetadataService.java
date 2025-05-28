@@ -70,10 +70,18 @@ public class MetadataService extends MetadataUtils {
     public List<ProcessedFile> getProcessedFiles() {
         return processedFileRepository.findAll();
     }
+    private boolean isValidImage(MultipartFile file) {
+        String contentType = file.getContentType();
+        return contentType != null && (contentType.equals("image/jpeg") || contentType.equals("image/png"));
+    }
 
     // 📌 API для чтения метаданных JPG
     @PostMapping("/readMetadata")
     public ResponseEntity<Map<String, Object>> readMetadata(@RequestParam("file") MultipartFile jpgFile) {
+        if (jpgFile.isEmpty() || !isValidImage(jpgFile)) {
+            return ResponseEntity.badRequest().body(Collections.singletonMap("error", "Некоректний файл"));
+        }
+
         try {
             Metadata metadata = ImageMetadataReader.readMetadata(jpgFile.getInputStream());
             Map<String, Object> extractedData = new HashMap<>();
@@ -83,7 +91,6 @@ public class MetadataService extends MetadataUtils {
                 exifDir.getTags().forEach(tag -> extractedData.put(tag.getTagName(), tag.getDescription()));
             }
 
-            // Читаємо XMP
             XmpDirectory xmpDir = metadata.getFirstDirectoryOfType(XmpDirectory.class);
             if (xmpDir != null) {
                 extractedData.put("XMP", xmpDir.getXmpProperties());
@@ -96,3 +103,8 @@ public class MetadataService extends MetadataUtils {
         }
     }
 }
+
+
+
+
+
